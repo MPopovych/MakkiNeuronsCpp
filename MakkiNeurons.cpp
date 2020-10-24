@@ -16,9 +16,9 @@ void testMultiply()
 	float farray2[12] = {4.0, 6.0, 6.0, 7.0, 0.0, 7.0, 4.0, 6.0, 6.0, 7.0, 0.0, 7.0};
 	ArraySupplier array2 = ArraySupplier(farray2, 12);
 
-	auto layer1 = new BrainLayer(6, 1, &array1, false);
-	auto layer2 = new BrainLayer(2, 6, &array2, false);
-	auto layer3 = new BrainLayer(2, 1, false);
+	auto layer1 = new BrainLayer(6, 1, &array1);
+	auto layer2 = new BrainLayer(2, 6, &array2);
+	auto layer3 = new BrainLayer(2, 1);
 	layer1->Print();
 	cout << endl;
 	layer2->Print();
@@ -45,9 +45,9 @@ void testBrain()
 	RandomRangeSupplier random;
 	auto brain = Brain(&func, &random);
 	// brain.SetDebug(true);
-	brain.Append(4, true);
-	brain.Append(600, true);
-	brain.Append(600, true);
+	brain.Append(4, &random);
+	brain.Append(8000, &random);
+	brain.Append(8000, &random);
 	brain.Append(2);
 
 	float input1[4] = {0, 0, 0, 0};
@@ -60,7 +60,7 @@ void testBrain()
 	float output[2] = {0, 0};
 
 	clock_t begin = clock();
-	for (int i = 0; i < 10000; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		testBrain(&brain, input1, 4, output, 2);
 		testBrain(&brain, input2, 4, output, 2);
@@ -72,6 +72,12 @@ void testBrain()
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin);
 	cout << "Elapsed time: " << elapsed_secs << "ms." << endl;
+
+	BrainStructure* brain_sturcture = brain.GetStructure();
+	for (int i; i < brain_sturcture->len; i++) {
+		cout << " " << brain_sturcture->array[i] << endl;
+	}
+	delete brain_sturcture;
 }
 
 int main()

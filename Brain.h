@@ -3,6 +3,16 @@
 #include "BrainLayer.cpp"
 #include "BrainFunction.h"
 
+struct BrainStructure 
+{
+    int len;
+    int* array;
+    ~BrainStructure() 
+    {
+        delete[] array;
+    }
+};
+
 class Brain
 {
 private:
@@ -27,7 +37,7 @@ public:
         layers.clear();
     }
 
-    int *GetStructure();
+    BrainStructure *GetStructure();
     BrainLayer *GetWeightLayer(int index);
     BrainLayer *GetLayer(int index);
     BrainFunction *GetFunction();
@@ -35,7 +45,7 @@ public:
     int GetWeightLayerCount();
     void SetDebug(bool d);
     void Append(int count);
-    void Append(int count, bool biased);
+    void Append(int count, ValueSupplier *bSupplier);
     void SetFunction(BrainFunction *function);
     void SetInput(float source[], size_t len);
     void SetInput(ValueSupplier *supplier);

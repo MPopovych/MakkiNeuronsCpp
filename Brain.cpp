@@ -1,6 +1,6 @@
 #include "Brain.h"
 
-int *Brain::GetStructure()
+BrainStructure *Brain::GetStructure()
 {
     int currentCount = layers.size();
     if (currentCount == 0)
@@ -11,9 +11,9 @@ int *Brain::GetStructure()
     int *arr = (int *)malloc(sizeof(int) * count);
     for (int i = 0; i < count; i++)
     {
-        arr[i] = layers[i * 2]->GetHeight();
+        arr[i] = layers[i * 2]->GetWidth();
     }
-    return arr;
+    return new BrainStructure{ count, arr };
 }
 
 BrainFunction *Brain::GetFunction()
@@ -48,10 +48,10 @@ void Brain::SetDebug(bool d)
 
 void Brain::Append(int count)
 {
-    this->Append(count, false);
+    this->Append(count, NULL);
 }
 
-void Brain::Append(int count, bool biased)
+void Brain::Append(int count, ValueSupplier *bSupplier)
 {
     layerCount++;
 
@@ -62,9 +62,9 @@ void Brain::Append(int count, bool biased)
     }
     if (lastSize > 0)
     {
-        layers.push_back(new BrainLayer(count, lastSize, supplier, false)); // weight layer
+        layers.push_back(new BrainLayer(count, lastSize, supplier)); // weight layer
     }
-    layers.push_back(new BrainLayer(count, 1, supplier, biased));
+    layers.push_back(new BrainLayer(count, 1, NULL, bSupplier)); // hidden layer
 }
 
 void Brain::SetFunction(BrainFunction *f)
@@ -145,6 +145,6 @@ void Brain::Calculate(float dst[], size_t len)
 
     for (int i = 0; i < len; i++)
     {
-        dst[i] = last->GetValue(0, i);
+        dst[i] = last->GetValue(i, 0);
     }
 }
