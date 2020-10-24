@@ -28,7 +28,7 @@ BrainLayer *Brain::GetWeightLayer(int index)
 
 BrainLayer *Brain::GetLayer(int index)
 {
-    return layers[(index + 1) / 2];
+    return layers[index * 2];
 }
 
 int Brain::GetLayerCount()
