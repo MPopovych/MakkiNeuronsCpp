@@ -37,12 +37,6 @@ void testBrain(Brain *brain, float *input, size_t input_len, float *output, size
 
 	brain->SetInput(input, input_len);
 	brain->Calculate(output, output_len);
-
-	// cout << "OUTPUT: ";
-	// for (int i = 0; i < output_len; i++) {
-	// 	cout << " " << output[i];
-	// }
-	// cout << ";" << endl;
 }
 
 void testBrain()
@@ -52,9 +46,9 @@ void testBrain()
 	auto brain = Brain(&func, &random);
 	// brain.SetDebug(true);
 	brain.Append(4, true);
-	brain.Append(60, true);
-	brain.Append(60, true);
-	brain.Append(60, true);
+	brain.Append(200, true);
+	brain.Append(200, true);
+	brain.Append(200, true);
 	brain.Append(2);
 
 	float input1[4] = {0, 0, 0, 0};
@@ -67,7 +61,7 @@ void testBrain()
 	float output[2] = {0, 0};
 
 	clock_t begin = clock();
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < 10000; i++)
 	{
 		testBrain(&brain, input1, 4, output, 2);
 		testBrain(&brain, input2, 4, output, 2);

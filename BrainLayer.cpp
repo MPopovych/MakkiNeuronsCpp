@@ -65,7 +65,8 @@ void BrainLayer::SetValue(int x, int y, float value)
 
 void BrainLayer::SetToBias()
 {
-    if (this->p_bias_values == NULL) {
+    if (this->p_bias_values == NULL)
+    {
         return;
     }
     for (int x = 0; x < this->width; x++)
@@ -78,7 +79,7 @@ void BrainLayer::SetToBias()
     }
 }
 
-void BrainLayer::SetToZeros() 
+void BrainLayer::SetToZeros()
 {
     for (int x = 0; x < this->width; x++)
     {
@@ -91,12 +92,12 @@ void BrainLayer::SetToZeros()
 
 void BrainLayer::Multiply(BrainLayer *target, BrainLayer *destination)
 {
-    int thisX = this->width;
-    int thisY = this->height;
-    int targetX = target->width;
-    int targetY = target->height;
-    int destinationX = destination->width;
-    int destinationY = destination->height;
+    const int thisX = this->width;
+    const int thisY = this->height;
+    const int targetX = target->width;
+    const int targetY = target->height;
+    const int destinationX = destination->width;
+    const int destinationY = destination->height;
 
     if (thisX != targetY)
     {
@@ -104,14 +105,20 @@ void BrainLayer::Multiply(BrainLayer *target, BrainLayer *destination)
         throw;
     }
 
+    float value = 0;
+    float *p_dest = destination->p_values;
+    const float *p_target = target->p_values;
+    const float *p_this = p_values;
     for (int i = 0; i < thisY; i++)
     { // aRow
         for (int j = 0; j < targetX; j++)
         { // bColumn
+            value = p_dest[j * destinationY + i];
             for (int k = 0; k < thisX; k++)
             { // aColumn
-                destination->p_values[j * destination->height + i] += p_values[k * height + i] * target->p_values[j * target->height + k];
+                 value += p_this[k * thisY + i] * p_target[j * targetY + k];
             }
+            p_dest[j * destinationY + i] = value;
         }
     }
 }
