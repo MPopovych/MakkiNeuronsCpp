@@ -107,8 +107,8 @@ void BrainLayer::Multiply(BrainLayer *target, BrainLayer *destination)
 
     float value = 0;
     float *p_dest = destination->p_values;
-    const float *p_target = target->p_values;
-    const float *p_this = p_values;
+    float *p_target = target->p_values;
+    float *p_this = p_values;
     for (int i = 0; i < thisY; i++)
     { // aRow
         for (int j = 0; j < targetX; j++)
@@ -116,7 +116,7 @@ void BrainLayer::Multiply(BrainLayer *target, BrainLayer *destination)
             value = p_dest[j * destinationY + i];
             for (int k = 0; k < thisX; k++)
             { // aColumn
-                 value += p_this[k * thisY + i] * p_target[j * targetY + k];
+                value += p_this[k * thisY + i] * p_target[j * targetY + k];
             }
             p_dest[j * destinationY + i] = value;
         }

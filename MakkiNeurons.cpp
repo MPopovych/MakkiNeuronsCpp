@@ -46,9 +46,8 @@ void testBrain()
 	auto brain = Brain(&func, &random);
 	// brain.SetDebug(true);
 	brain.Append(4, true);
-	brain.Append(200, true);
-	brain.Append(200, true);
-	brain.Append(200, true);
+	brain.Append(600, true);
+	brain.Append(600, true);
 	brain.Append(2);
 
 	float input1[4] = {0, 0, 0, 0};
@@ -71,14 +70,14 @@ void testBrain()
 		testBrain(&brain, input6, 4, output, 2);
 	}
 	clock_t end = clock();
-	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-	cout << "Elapsed time: " << elapsed_secs << "s." << endl;
+	double elapsed_secs = double(end - begin);
+	cout << "Elapsed time: " << elapsed_secs << "ms." << endl;
 }
 
 int main()
 {
 	cout << "Hello compiler." << endl;
-	testMultiply();
+	// testMultiply();
 	testBrain();
 	return 0;
 }
